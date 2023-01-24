@@ -1,18 +1,21 @@
-const slider = tns({
-    container: ".my-slider",
-    mode:"carousel",
-    items:3,
-    edgePadding:-10,
-    slideBy: "page",
-    speed:7000,
-    nav:true,
-    navPosition:"top",
-    autoplay:false,
-    autoplayTimeout:7000,
-    autoplayButtonOutput:false,
-    controlsContainer: "#buttons",
-    prevButton:".previous",
-    nextButton:".next"
-  });
+const {render} = require('ejs')
+const express = require('express');
+const fs = require('fs');
+const mongodb = require('mongodb');
+const path = require('path');
+const routes = require('./route/route');
+const db = require('./data/database');
 
 
+const app = express();
+app.use(express.static('public'));
+
+app.set('views', path.join(__dirname, 'view'));
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
+app.use(routes);
+
+db.connectToDatabase().then(function(){
+    app.listen(3000);
+
+})
