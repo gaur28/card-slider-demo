@@ -13,6 +13,7 @@ app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'view'));
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(routes);
 
 db.connectToDatabase().then(function(){

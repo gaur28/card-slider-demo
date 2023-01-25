@@ -7,17 +7,18 @@ const db = require("../data/database");
 const ObjectId = mongodb.ObjectId;
 
 const routes = express.Router();
-routes.post('/', async function(req,res){
+routes.post('/createNewBook', async function(req,res){
   const bookInfo = {
     title: req.body.title,
     summary:req.body.summary,
-    name:req.body.author,
+    name:req.body.name,
     email:req.body.email
   };
   console.log(bookInfo);
   const book = await db.getDb().collection('book').insertOne(bookInfo);
   console.log(book);
-  res.redirect('/');
+  res.json(book);
+
 
 });
 
@@ -65,12 +66,12 @@ routes.post('/editBook/:id', async function(req,res){
     const bookId = req.params.id;
     const result = await db.getDb().collection('book').updateOne({_id : new ObjectId(bookId)}, {$set:{
         title: req.body.title,
-        name: req.body.author,
+        name: req.body.name,
         summary: req.body.summary,
         email:req.body.email
 
     }});
-    res.redirect('/');
+    res.json({message:'book Edited'});
 });
 routes.get('/searchResults', function(req,res){
   res.render('searchResult');
@@ -85,7 +86,7 @@ routes.get('/createNewBook', function(req,res){
 routes.post('/deleteBook/:id', async function(req,res){
   const bookId = req.params.id;
   const result = await db.getDb().collection('book').deleteOne({_id: new ObjectId(bookId)});
-  res.redirect('/');
+  res.json(result);
 });
 
 
