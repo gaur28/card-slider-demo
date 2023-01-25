@@ -3,6 +3,8 @@
 <head>
     <%- include('head') %> 
     <link rel="stylesheet" href="/styles/booksStyle.css">
+    <script src="/scripts/deleteBook.js" defer></script>
+
 </head>
 <body>
    <%- include('navbar') %>
@@ -40,7 +42,7 @@
                 <p class="card-text"><%= book.name  %> </p>
                 <p class="card-text"><%= book.summary %> </p>
                 <div >
-                    <form action="/deleteBook/<%= book._id %>" method="post">
+                    <form id="delete-Book" data-postid="<%= book._id %> ">
                         <button class="button-links btn btn-primary">Delete Book</button>
                     </form>
                     <div class="button-links"><a href="/editBook/<%= book._id %> " class="btn btn-primary"> Edit Book</a></div>
@@ -50,5 +52,6 @@
         
     </div>
    </main>
+
 </body>
 </html>
